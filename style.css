@@ -1,63 +1,123 @@
-/* —— basic reset —— */
+/* —— reset —— */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* —— body + fonts —— */
+/* —— palette & typography —— */
+:root {
+  --bg: #000000;
+  --fg: #ffffff;
+  --gold: #e3a535;
+  --red: #ff003b;
+}
+
 body {
-  font-family: "Montserrat", Arial, Helvetica, sans-serif;
-  color: #333;
+  font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 16px;
+  line-height: 1.5;
   display: flex;
   justify-content: center;
+  min-height: 100vh;
 }
 
 .page-wrapper {
-  width: 90%;
+  width: 92%;
   max-width: 900px;
+  display: flex;
+  flex-direction: column;
 }
 
 /* header */
 .site-header {
   text-align: center;
-  padding-top: 50px;
+  padding: 40px 0 20px;
+  border-bottom: 1px solid var(--gold);
+}
+
+.site-logo {
+  max-width: 220px;
+  height: auto;
+  display: block;
+  margin: 0 auto 16px;
 }
 
 .site-title {
-  font-size: 22px;
-  font-weight: 500;
-  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+/* chatbox */
+.chatbox {
+  margin: 24px 0;
+}
+
+/* latest question band (LevelUp #6) */
+.latest-question {
+  min-height: 52px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  border: 2px solid var(--gold);
+  background: #000;
+  color: var(--gold);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.latest-question:empty::before {
+  content: "Your latest question will appear here.";
+  color: #888;
+  font-weight: 400;
+  letter-spacing: normal;
 }
 
 /* chat window */
-.chatbox {
-  margin: 40px 0;
-}
-
 .chat-window {
-  height: 360px;
-  border: 1px solid #000;
+  height: 420px;
+  border: 1px solid var(--fg);
   padding: 20px;
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: 16px;
   overflow-y: auto;
-  background: #fafafa;
-  white-space: pre-line;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* messages */
+/* message bubbles (LevelUp #7) */
 .msg {
-  margin-bottom: 14px;
-  line-height: 1.5;
+  max-width: 80%;
+  padding: 12px 16px;
+  border: 1px solid transparent;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .msg.user {
+  align-self: flex-end;
+  background: var(--gold);
   color: #000;
+  border-color: var(--gold);
+  font-weight: 500;
 }
 
-.msg.ai {
-  color: #666666;
+.msg.assistant {
+  align-self: flex-start;
+  background: transparent;
+  color: var(--fg);
+  border-color: var(--fg);
+}
+
+.msg.assistant.error {
+  border-color: var(--red);
+  color: var(--red);
 }
 
 /* input row */
@@ -69,42 +129,40 @@ body {
 
 .chat-form input {
   flex: 1;
-  padding: 12px;
-  border: 1px solid #ccc;
-  font-size: 18px;
+  padding: 14px;
+  border: 1px solid var(--fg);
+  background: #000;
+  color: var(--fg);
+  font-size: 16px;
+  font-family: inherit;
 }
 
-.chat-form input:focus {
-  outline: 2px solid #000;
+.chat-form input::placeholder {
+  color: #888;
+}
+
+.chat-form input:focus-visible,
+.chat-form button:focus-visible {
+  outline: 2px solid var(--gold);
   outline-offset: 2px;
 }
 
 .chat-form button {
-  font-size: 18px;
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 12px;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: #000;
+  border: 1px solid var(--gold);
+  padding: 0 22px;
   cursor: pointer;
-  transition: background 0.3s;
-}
-
-.chat-form button .material-icons {
-  font-size: 24px;
+  font-family: inherit;
 }
 
 .chat-form button:hover {
-  background: #666666;
-}
-
-.chat-form button:focus {
-  outline: 2px solid #000;
-  outline-offset: 2px;
+  background: #000;
+  color: var(--gold);
 }
 
 /* visually hidden */
@@ -122,10 +180,12 @@ body {
 
 /* footer */
 .site-footer {
-  margin: 60px 0 40px;
+  margin: 40px 0 30px;
   text-align: center;
   font-size: 14px;
-  color: #666;
+  color: #cccccc;
+  border-top: 1px solid var(--gold);
+  padding-top: 20px;
 }
 
 .site-footer nav {
@@ -133,11 +193,12 @@ body {
 }
 
 .site-footer a {
-  margin: 0 8px;
-  color: #000;
+  margin: 0 10px;
+  color: var(--gold);
   text-decoration: none;
 }
 
-.site-footer a:hover {
-  color: #666666;
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  text-decoration: underline;
 }
